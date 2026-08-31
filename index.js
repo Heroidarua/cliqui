@@ -1,4 +1,4 @@
-*
+/*
   ptoszek.pl
   Powered by Jaczup
 
@@ -35,10 +35,11 @@ const TICK_LENGTH = 50
 const HIDDEN_STYLE = 'position: fixed; width: 1px; height: 1px; overflow: hidden; top: -10px; left: -10px;'
 
 const ART = [
+
   `
 _/﹋\_
 (҂`_´) - GAME-OVER 📵
-<;︻╦╤─ ҉ - - - - - - - - - - - - -
+<;︻╦╤─ ҉ - - - - - - - - - - - - 
   `,
   `
   ▓▓          ▓▓
@@ -62,7 +63,7 @@ const SEARCHES = [
   'ptoszek',
   'ptak',
   'kanarek',
-  'jaczup',
+  'jaczup'
 ]
 
 const VIDEOS = [
