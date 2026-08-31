@@ -28,7 +28,7 @@ const SCREEN_WIDTH = window.screen.availWidth
 const SCREEN_HEIGHT = window.screen.availHeight
 const WIN_WIDTH = 480
 const WIN_HEIGHT = 260
-const VELOCITY = 15
+const VELOCITY = 39
 const MARGIN = 10
 const TICK_LENGTH = 50
 
@@ -443,7 +443,7 @@ function animateUrlWithEmojis () {
 
       for (i = 0; i < 10; i++) {
         m = Math.floor(e.length * ((Math.sin((Date.now() / 100) + i) + 1) / 2))
-        s += '👶' + e[m]
+        s += '🔞' + e[m]
       }
 
       window.location.hash = s
@@ -465,7 +465,7 @@ function animateUrlWithEmojis () {
   }
 
   function animateUrlWithMoons () {
-    const f = ['🌑', '🌘', '🌗', '🌖', '🌕', '🌔', '🌓', '🌒']
+    const f = ['❌', '❌', '❌', '❌', '❌', '❌', '❌', '❌']
     const d = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     let m = 0
 
