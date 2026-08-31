@@ -1,34 +1,8 @@
-/*
-  ptoszek.pl
-  Powered by Jaczup
-
-  My version (ptoszek.pl): 
-  - https://github.com/jaczup/ptoszek.pl
-  Original version (theannoyingsite.com): 
-  - https://github.com/feross/TheAnnoyingSite.com/
-
-  Contact with me: https://jaczup.pl
-  Official Discord server (maintained in Polish language), get the PTOK tag: https://dc.ptoszek.pl
-
-  Contributors:
-    @jaczup - https://github.com/jaczup
-    @intexpression - https://github.com/intexpression
-    @dan64iel - https://github.com/dan64iel
-    @imzeme - https://github.com/imzeme
-    @GameShoot8050 - https://github.com/GameShoot8050
-    @wetraks -  https://github.com/wetraks
-    @cryblanka - https://github.com/cryblanka
-    @9fm - https://github.com/9fm
-    @MARECKIyt - https://github.com/MARECKIyt
-    @Hyd3r1 - https://github.com/Hyd3r1
-    @MariaWasNotAvailable - https://github.com/MariaWasNotAvailable
-*/
-
 const SCREEN_WIDTH = window.screen.availWidth
 const SCREEN_HEIGHT = window.screen.availHeight
 const WIN_WIDTH = 480
 const WIN_HEIGHT = 260
-const VELOCITY = 39
+const VELOCITY = 50
 const MARGIN = 10
 const TICK_LENGTH = 50
 
@@ -36,28 +10,24 @@ const HIDDEN_STYLE = 'position: fixed; width: 1px; height: 1px; overflow: hidden
 
 const ART = [
   `
-┊┊ ☆┊┊┊┊☆┊┊☆ ┊┊┊┊┊
-┈┈┈┈╭━━━━━━╮┊☆ ┊┊
-┈☆ ┈┈┃╳╳╳▕╲▂▂╱▏┊┊
-┈┈☆ ┈┃╳╳╳▕▏▍▕▍▏┊┊
-┈┈╰━┫╳╳╳▕▏╰┻╯▏┊┊
-☆ ┈┈┈┃╳╳╳╳╲▂▂╱┊┊┊
-┊┊☆┊╰┳┳━━┳┳╯┊ ┊ ☆┊
+_/﹋\_
+(҂`_´) - GAME-OVER 📵
+<;︻╦╤─ ҉ - - - - - - - - - - - - -
   `,
   `
-░░▓▓░░░░░░░░▓▓░░
-░▓▒▒▓░░░░░░▓▒▒▓░
-░▓▒▒▒▓░░░░▓▒▒▒▓░
-░▓▒▒▒▒▓▓▓▓▒▒▒▒▓░
-░▓▒▒▒▒▒▒▒▒▒▒▒▒▒▓
+  ▓▓          ▓▓
+ ▓▒▒▓       ▓▒▒▓
+ ▓▒▒▒▓     ▓▒▒▒▓
+ ▓▒▒▒▒▓▓▓▓▒▒▒▒▓
+ ▓▒▒▒▒▒▒▒▒▒▒▒▒▒▓
 ▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓
-▓▒▒▒░▓▒▒▒▒▒░▓▒▒▓
+▓▒▒▒⭕▒▒▒▒▒⭕▓▒▒▓
 ▓▒▒▒▓▓▒▒▒▓▒▓▓▒▒▓
 ▓▒░░▒▒▒▒▒▒▒▒▒░░▓
-▓▒░░▒▓▒▒▓▒▒▓▒░░▓
-░▓▒▒▒▓▓▓▓▓▓▓▒▒▓░
-░░▓▒▒▒▒▒▒▒▒▒▒▓░░
-░░░▓▓▓▓▓▓▓▓▓▓░░░
+▓▒░ ♦️♦️♦️♦️♦️▒░▓
+ ▓    HACKEADO   ▓ 
+  ▓▒♦️♦️♦️♦️♦️▒▓
+   ▓▓▓▓▓▓▓▓▓▓
   `
 ]
 
@@ -102,14 +72,14 @@ const FILE_DOWNLOADS = [
 ]
 
 const PHRASES = [
-  'hello my name is ptoszek, lol',
-  'birds are funny lalalalalalalallalala',
-  'wgl co u cb bo u mn dbr',
-  'knuuurrr eksplozja',
-  'hee haw hee haw hee haw hee haw hee haw hee haw hee haw hee haw hee haw hee haw hee haw',
-  'abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz',
-  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaak',
-  'eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo'
+  'Ola, visite esse site sos01.com.br, haha',
+  'os pássaros são engraçados lalalalalalalalalala',
+  'VAIIIIIIIII BRASILLLLLLLLL',
+  'TROLAGEMMMMM DO BEMMMMM,
+  'CUIdado onde voces clicammmm',
+  'HA-HA-HA-HA-HA-HA-HA-HA-HA',
+  'Cadeeeee o Caféeeeeee',
+  'Menino Ney é o melhor'
 ]
 
 const LOGOUT_SITES = {
