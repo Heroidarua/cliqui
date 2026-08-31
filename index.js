@@ -49,7 +49,7 @@ const SEARCHES = [
   'Ola, visite esse site sos01.com.br, haha',
   'os pássaros são engraçados lalalalalalalalalala',
   'VAIIIIIIIII BRASILLLLLLLLL',
-  'TROLAGEMMMMM DO BEMMMMM',
+  'VOCE FOI HACKEADO',
   'CUIdado onde voces clicammmm',
   'HA-HA-HA-HA-HA-HA-HA-HA-HA',
   'Cadeeeee o Caféeeeeee',
