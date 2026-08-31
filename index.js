@@ -62,7 +62,7 @@ const SEARCHES = [
   'ptoszek',
   'ptak',
   'kanarek',
-  'jaczup'
+  'jaczup',
 ]
 
 const VIDEOS = [
@@ -79,7 +79,7 @@ const VIDEOS = [
   'media/videos/szybkakaczka.mp4', // added by @dan64iel
   'media/videos/kaczuszka.mp4', //added by @imzeme
   'media/videos/gratulacje.mp4', //added by @GameShoot8050
-  'media/videos/puddi.mp4' //added by @MariaWasNotAvailable
+  'media/videos/puddi.mp4', //added by @MariaWasNotAvailable
 ]
 
 const FILE_DOWNLOADS = [
@@ -101,11 +101,11 @@ const PHRASES = [
   'Ola, visite esse site sos01.com.br, haha',
   'os pássaros são engraçados lalalalalalalalalala',
   'VAIIIIIIIII BRASILLLLLLLLL',
-  'TROLAGEMMMMM DO BEMMMMM,
+  'TROLAGEMMMMM DO BEMMMMM',
   'CUIdado onde voces clicammmm',
   'HA-HA-HA-HA-HA-HA-HA-HA-HA',
   'Cadeeeee o Caféeeeeee',
-  'Menino Ney é o melhor'
+  'Menino Ney é o melhor',
 ]
 
 const LOGOUT_SITES = {
