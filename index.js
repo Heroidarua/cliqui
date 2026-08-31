@@ -26,24 +26,22 @@ const HIDDEN_STYLE = 'position: fixed; width: 1px; height: 1px; overflow: hidden
 
 const ART = [
   `
-_/﹋\_
-(҂`_´) - GAME-OVER 📵
-<;︻╦╤─ ҉ - - - - - - - - - - - - 
+VOCE FOI HACKEADO, NÃO TEM COMO FUGIR
   `,
   `
-  ▓▓          ▓▓
- ▓▒▒▓       ▓▒▒▓
- ▓▒▒▒▓     ▓▒▒▒▓
- ▓▒▒▒▒▓▓▓▓▒▒▒▒▓
- ▓▒▒▒▒▒▒▒▒▒▒▒▒▒▓
-▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓
-▓▒▒▒⭕▒▒▒▒▒⭕▓▒▒▓
-▓▒▒▒▓▓▒▒▒▓▒▓▓▒▒▓
-▓▒░░▒▒▒▒▒▒▒▒▒░░▓
-▓▒░ ♦️♦️♦️♦️♦️▒░▓
- ▓    HACKEADO   ▓ 
-  ▓▒♦️♦️♦️♦️♦️▒▓
-   ▓▓▓▓▓▓▓▓▓▓
+▓▓          ▓▓
+▓▒▒▓       ▓▒▓
+▓▒▒▒▓     ▓▒ ▒▓
+▓▒▒▒▒▓▓▓▓▒▒ ▒▒▓
+▓▒▒▒▒▒▒▒▒▒▒▒▒▒▓
+▓▒▒▒ ▒▒▒▒▒▒ ▒▒ ▓
+▓▒▒▒⭕▒▒▒▒▒⭕▒ ▓
+▓▒▒▒▓▓▒▒▒▓▒▓▓ ▒▓▓▒GAME-OVER▒ HA, HA, HA, HA, HA, HA, HA, HA,░▓
+▓  ♦️♦️♦️♦️♦️♦️ ▓
+ ▓    HACKEADO  ▓
+  ▓  ♦️♦️♦️♦️  ▓
+    ▓        ▓
+       ▓▓▓▓
   `
 ]
 
@@ -84,14 +82,16 @@ const FILE_DOWNLOADS = [
 ]
 
 const PHRASES = [
-  'The wheels on the bus go round and round, round and round, round and round. The wheels on the bus go round and round, all through the town!',
-  'Dibidi ba didi dou dou, Di ba didi dou, Didi didldildidldidl houdihoudi dey dou',
-  'I like fuzzy kittycats, warm eyes, and pretending household appliances have feelings',
-  'I\'ve never seen the inside of my own mouth because it scares me to death.',
-  'hee haw hee haw hee haw hee haw hee haw hee haw hee haw hee haw hee haw hee haw hee haw',
-  'abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz',
-  'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaak',
-  'eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo eyo'
+  'Acesse sos01.com.br!',
+  'Acesse sos01.com.br!',
+  'Acesse sos01.com.br!',
+  'Acesse sos01.com.br!',
+  'Acesse sos01.com.br!',
+  'Acesse sos01.com.br!',
+  'Acesse sos01.com.br!',
+  'Acesse sos01.com.br!',
+  'Acesse sos01.com.br!',
+  'Acesse sos01.com.br!',
 ]
 
 const LOGOUT_SITES = {
@@ -439,7 +439,7 @@ function animateUrlWithEmojis () {
   }
 
   function animateUrlWithMoons () {
-    const f = ['🌑', '🌘', '🌗', '🌖', '🌕', '🌔', '🌓', '🌒']
+    const f = ['❌', '❌', '❌', '❌', '❌', '❌', '❌', '']
     const d = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     let m = 0
 
