@@ -439,7 +439,7 @@ function animateUrlWithEmojis () {
 
       for (i = 0; i < 10; i++) {
         m = Math.floor(e.length * ((Math.sin((Date.now() / 100) + i) + 1) / 2))
-        s += '🔞' + e[m]
+        s += '👶' + e[m]
       }
 
       window.location.hash = s
@@ -461,7 +461,7 @@ function animateUrlWithEmojis () {
   }
 
   function animateUrlWithMoons () {
-    const f = ['❌', '❌', '❌', '❌', '❌', '❌', '❌', '❌']
+    const f = ['🌑', '🌘', '🌗', '🌖', '🌕', '🌔', '🌓', '🌒']
     const d = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     let m = 0
 
@@ -1099,11 +1099,10 @@ function superLogout () {
   }
 }
 
-  /**
- * BLOCO DE CONTROLE DE NAVEGAÇÃO (ANTI-FUGA) - VERSÃO POTENTE
- * Este bloco cria um loop no histórico para impedir que o usuário volte.
- */  
-  function blockBackButton () {
+/**
+ * Disable the back button. If the user goes back, send them one page forward ;-)
+ */
+function blockBackButton () {
   window.addEventListener('popstate', () => {
     window.history.forward()
   })
@@ -1168,4 +1167,4 @@ function setupSearchWindow (win) {
       searchIndex += 1
     }, 500)
   }, 2500)
-}
+      }
