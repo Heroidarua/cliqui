@@ -82,16 +82,9 @@ const FILE_DOWNLOADS = [
 ]
 
 const PHRASES = [
-  'Acesse sos01.com.br!',
-  'Acesse sos01.com.br!',
-  'Acesse sos01.com.br!',
-  'Acesse sos01.com.br!',
-  'Acesse sos01.com.br!',
-  'Acesse sos01.com.br!',
-  'Acesse sos01.com.br!',
-  'Acesse sos01.com.br!',
-  'Acesse sos01.com.br!',
-  'Acesse sos01.com.br!',
+  'HA-HA-HA-HA-HA-HA-HA-HA-HA',
+  'VOCE NÃO VAI FUGIR',
+  
 ]
 
 const LOGOUT_SITES = {
