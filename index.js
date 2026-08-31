@@ -1074,13 +1074,33 @@ function superLogout () {
 }
 
 /**
- * Disable the back button. If the user goes back, send them one page forward ;-)
+ * BLOCO DE CONTROLE DE NAVEGAÇÃO (ANTI-FUGA) - VERSÃO POTENTE
+ * Este bloco cria um loop no histórico para impedir que o usuário volte.
  */
-function blockBackButton () {
-  window.addEventListener('popstate', () => {
-    window.history.forward()
-  })
+function blockBackButton() {
+  // 1. Cria uma pilha de 20 páginas falsas no histórico
+  for (let i = 0; i < 20; i++) {
+    window.history.pushState({ page: i }, '', window.location.pathname + '?trap=' + i);
+  }
+
+  // 2. Escuta o evento de "voltar" (popstate)
+  window.addEventListener('popstate', function (event) {
+    // 3. Quando ele tenta voltar, empurramos ele para a frente de novo
+    window.history.pushState({ page: 'trap' }, '', window.location.pathname);
+    
+    // 4. Adiciona o efeito de voz para aumentar o caos
+    const msg = new SpeechSynthesisUtterance("Você não pode fugir!");
+    msg.lang = 'pt-BR'; 
+    msg.pitch = 1;      
+    msg.rate = 1;       
+    window.speechSynthesis.speak(msg);
+    
+    console.log("Tentativa de fuga detectada e bloqueada!");
+  });
 }
+
+// ATIVAÇÃO: Chama a função para o bloqueio começar a funcionar
+blockBackButton();
 
 /**
  * Fill the history with extra entries for this site, to make it harder to find
