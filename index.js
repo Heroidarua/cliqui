@@ -26,47 +26,36 @@ const HIDDEN_STYLE = 'position: fixed; width: 1px; height: 1px; overflow: hidden
 
 const ART = [
   `
-┊┊ ☆┊┊┊┊☆┊┊☆ ┊┊┊┊┊
-┈┈┈┈╭━━━━━━╮┊☆ ┊┊
-┈☆ ┈┈┃╳╳╳▕╲▂▂╱▏┊┊
-┈┈☆ ┈┃╳╳╳▕▏▍▕▍▏┊┊
-┈┈╰━┫╳╳╳▕▏╰┻╯▏┊┊
-☆ ┈┈┈┃╳╳╳╳╲▂▂╱┊┊┊
-┊┊☆┊╰┳┳━━┳┳╯┊ ┊ ☆┊
+_/﹋\_
+(҂`_´) - GAME-OVER 📵
+<;︻╦╤─ ҉ - - - - - - - - - - - - 
   `,
   `
-░░▓▓░░░░░░░░▓▓░░
-░▓▒▒▓░░░░░░▓▒▒▓░
-░▓▒▒▒▓░░░░▓▒▒▒▓░
-░▓▒▒▒▒▓▓▓▓▒▒▒▒▓░
-░▓▒▒▒▒▒▒▒▒▒▒▒▒▒▓
+  ▓▓          ▓▓
+ ▓▒▒▓       ▓▒▒▓
+ ▓▒▒▒▓     ▓▒▒▒▓
+ ▓▒▒▒▒▓▓▓▓▒▒▒▒▓
+ ▓▒▒▒▒▒▒▒▒▒▒▒▒▒▓
 ▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓
-▓▒▒▒░▓▒▒▒▒▒░▓▒▒▓
+▓▒▒▒⭕▒▒▒▒▒⭕▓▒▒▓
 ▓▒▒▒▓▓▒▒▒▓▒▓▓▒▒▓
 ▓▒░░▒▒▒▒▒▒▒▒▒░░▓
-▓▒░░▒▓▒▒▓▒▒▓▒░░▓
-░▓▒▒▒▓▓▓▓▓▓▓▒▒▓░
-░░▓▒▒▒▒▒▒▒▒▒▒▓░░
-░░░▓▓▓▓▓▓▓▓▓▓░░░
+▓▒░ ♦️♦️♦️♦️♦️▒░▓
+ ▓    HACKEADO   ▓ 
+  ▓▒♦️♦️♦️♦️♦️▒▓
+   ▓▓▓▓▓▓▓▓▓▓
   `
 ]
 
 const SEARCHES = [
-  'where should i bury the body',
-  'why does my eye twitch',
-  'why is my poop green',
-  'why do i feel so empty',
-  'why do i always feel hungry',
-  'why do i always have diarrhea',
-  'why does my anus itch',
-  'why does my belly button smell',
-  'why does my cat attack me',
-  'why does my dog eat poop',
-  'why does my fart smell so bad',
-  'why does my mom hate me',
-  'why does my pee smell bad',
-  'why does my poop float',
-  'proof that the earth is flat'
+  'Ola, visite esse site sos01.com.br, haha',
+  'os pássaros são engraçados lalalalalalalalalala',
+  'VAIIIIIIIII BRASILLLLLLLLL',
+  'TROLAGEMMMMM DO BEMMMMM',
+  'CUIdado onde voces clicammmm',
+  'HA-HA-HA-HA-HA-HA-HA-HA-HA',
+  'Cadeeeee o Caféeeeeee',
+  'Menino Ney é o melhor',
 ]
 
 const VIDEOS = [
