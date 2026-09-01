@@ -82,7 +82,7 @@ const FILE_DOWNLOADS = [
 ]
 
 const PHRASES = [
-  'HA-HA-HA-HA-HA-HA-HA-HA-HA',
+  'VOCE FOI HACKEADO',
   'VOCE NÃO VAI FUGIR',
   
 ]
