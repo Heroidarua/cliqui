@@ -1127,25 +1127,36 @@ function setupSearchWindow (win) {
   }, 3000)
 }
 
-function detectBrowser () {
-  const userAgent = navigator.userAgent
+function detectBrowser() {
+  const userAgent = navigator.userAgent;
+  const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
+
+  // 1. Verificações de navegadores específicos que têm identificadores únicos
   if (/samsungbrowser\//i.test(userAgent)) {
-    return 'samsung'
-  } else if (/edg\//i.test(userAgent)) {
-    return 'edge'
-  } else if (/edga\//i.test(userAgent)) {
-    return 'edge'
-  } else if (/opt\//i.test(userAgent)) {
-    // Opera iOS
-    return 'opera'
-  } else if (/opr\//i.test(userAgent)) {
-    // Opera Android
-    return 'opera'
-  } else if (/chrome\//i.test(userAgent)) {
-    return 'chrome'
-  } else if (/safari\//i.test(userAgent)) {
-    return 'safari'
+    return 'samsung';
+  } else if (/edg\//i.test(userAgent) || /edga\//i.test(userAgent)) {
+    return 'edge';
+  } else if (/opr\//i.test(userAgent) || /opt\//i.test(userAgent)) {
+    return 'opera';
   } else if (/firefox\//i.test(userAgent)) {
-    return 'firefox'
+    return 'firefox';
+  } 
+  
+  // 2. Verificação de Chrome (No iOS, o Chrome usa 'CriOS')
+  else if (/chrome\//i.test(userAgent) || /CriOS/i.test(userAgent)) {
+    return 'chrome';
+  } 
+  
+  // 3. Verificação de Safari (Geralmente o padrão no iOS se não for Chrome ou Opera)
+  else if (/safari\//i.test(userAgent)) {
+    // Se for iOS e não caiu no Chrome/Opera, é o Safari nativo
+    return isIOS ? 'safari' : 'safari'; 
   }
+
+  // 4. Fallback para detectar se é apenas um dispositivo iOS genérico
+  if (isIOS) {
+    return 'ios-device'; // Pode ser o Safari padrão do iPhone
+  }
+
+  return 'unknown';
 }
