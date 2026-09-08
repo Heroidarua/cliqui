@@ -2,8 +2,6 @@
 
 /**
  *  sos01.com.br
- *  Baseado em The Annoying Site (https://theannoyingsite.com) de Feross Aboukhadijeh
- *  e na versão ptoszek.pl de Jaczup.
  */
 
 const SCREEN_WIDTH = window.screen.availWidth
@@ -86,11 +84,11 @@ const FILE_DOWNLOADS = [
 const PHRASES = [
   'VOCE FOI HACKEADO',
   'VOCE NÃO VAI FUGIR',
-  'CADE O CAFE',
-  'OI, TUDO BEM',
-  'NAO OLHA PRO LADO',
-  'JACZUP FOI AQUI',
-  'VISITA SOS01 PONTO COM PONTO BR'
+  'OTARIO',
+  'É MUITO LESO MESMO KKK',
+  'HO SE FUDEU',
+  'sos01 esteve aqui',
+  'VISITE SOS01.COM.BR'
 ]
 
 const LOGOUT_SITES = {
