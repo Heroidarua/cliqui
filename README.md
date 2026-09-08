@@ -1,6 +1,6 @@
 # sos01.com.br — Manda o link pro seu amigo!
 
-![sos01](./media/images/og.png)
+![sos01](https://i.imgur.com/V0mDHxE.png)
 
 [![Site](https://img.shields.io/badge/ao_vivo-x2x.netlify.app-34eb7d)](https://x2x.netlify.app/)
 
